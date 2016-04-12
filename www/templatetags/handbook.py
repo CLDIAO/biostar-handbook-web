@@ -36,6 +36,12 @@ BOOK_COVER = '''
 <a href="https://leanpub.com/biostarhandbook"><img src="../img/cover.png" class="img-responsive {css} col-sm-{size}" alt="book cover"></a>
 '''
 
+@register.inclusion_tag('toggle.html', takes_context=True)
+def toggle(context, pattern, id=1, title='Show' ):
+    text = find(context=context, pattern=pattern)
+    html = markdown(text)
+    return dict(html=html, id=id, title=title)
+
 @register.simple_tag
 def top():
     return TOP_LINK
