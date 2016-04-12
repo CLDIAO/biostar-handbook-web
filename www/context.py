@@ -3,15 +3,18 @@ __author__ = 'ialbert'
 from itertools import *
 import django
 from django.template.loader import get_template
-import sys, os, csv, glob, re
+import sys, os, csv, glob, re, logging
+
+logger = logging.getLogger('pyblue')
 
 __this = os.path.dirname(__file__) or "."
 
 os.chdir(__this)
 
-# Allow the django template engine to load the custom tags.
-sys.path.append(__this)
-django.template.base.add_to_builtins("tags.handbook")
+from django.conf import settings
+
+# Automatically load the templatetags into the page.
+settings.TEMPLATES[0]['OPTIONS']['builtins'].append('www.templatetags.handbook')
 
 def find(target, pattern):
     collect = []
@@ -24,6 +27,7 @@ def find(target, pattern):
     collect.sort()
     return collect
 
+
 # Collect installation files.
 TOOL_INSTALL = find("tools", "_install.md")
 
@@ -34,17 +38,19 @@ NAVBAR = [
     ("about.html", '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info'),
 ]
 
-
 # Example numbers. Used for testing.
 NUMBERS = range(1, 4)
+
 
 # Example function call. Used for testing.
 def say_hello():
     return "Hello World!"
 
+
 # Generate the sitemap automatically.
 SKIP = set("500.html 404.html base.html unitbase.html search.html book_link.html".split())
-stream = open("sitemap.txt", "wb")
+sname = 'sitemap.xml'
+stream = open(sname, "wb")
 for dirpath, dirnames, files in os.walk(__this):
     files = [_.lower() for _ in files]
     files = filter(lambda x: x not in SKIP, files)
@@ -59,5 +65,6 @@ for dirpath, dirnames, files in os.walk(__this):
 
         stream.write("%s\n" % url)
 
-print ("sitemap generated")
+logger.info("sitemap generated: {}".format(sname))
+
 stream.close()

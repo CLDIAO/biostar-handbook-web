@@ -4,42 +4,18 @@ Biostar Handbook specific template tags.
 from __future__ import print_function, unicode_literals, absolute_import, division
 from django import template
 from pyblue.templatetags.pytags import markdown
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 import sys, re, logging, textwrap
-
-try:
-    import CommonMark
-except ImportError as exc:
-    print ("*** Please install CommonMark: pip install commonmark")
-    sys.exit()
 
 logger = logging.getLogger('pyblue')
 
 import bleach
-from pyblue.templatetags.pytags import load
+from pyblue.templatetags.pytags import find
 register = template.Library()
 
-print ("loading template library")
-
-#
-# We added a customized Django template tag
-# called md anchor that will wraps
-# markdown content into
-# an html anchor and a back to top link
-#
-# {% md hello %}
-# Hello
-# {% endmd %}
-# will produce:
-#
-# <a name="hello">&nbsp</a>
-# <p>Hello</p>
-# <a href="#top">&laquo; back to top</a>
-
-
-#
-# Based on http://jamie.curle.io/blog/minimal-markdown-template-tag-django/
-#
+logger.debug("loading template library: {}".format(__file__))
 
 def top_level_only(attrs, new=False):
 
@@ -66,7 +42,7 @@ def top():
 
 @register.simple_tag
 def back():
-    return BACK_LINK
+    return mark_safe(BACK_LINK)
 
 @register.simple_tag
 def anchor(name):
@@ -82,7 +58,7 @@ def cover(size=4, css="pull-right"):
 
 @register.simple_tag(takes_context=True)
 def simplecode(context, pattern):
-    text = load(context=context, pattern=pattern)
+    text = find(context=context, pattern=pattern)
     html = markdown("```\n{}\n```").format(text)
     return html
 
@@ -117,7 +93,7 @@ class MarkDownNode(template.Node):
         if self.title:
             text = "### %s\n\n%s" % (self.title, text)
         #text = markdown(text)
-        text = CommonMark.commonmark(text)
+        text = markdown(text)
         link_anchor = ANCHOR_PATTERN % self.anchor
         text = bleach.linkify(text, callbacks=self.CALLBACKS, skip_pre=True)
         text = link_anchor + text + TOP_LINK

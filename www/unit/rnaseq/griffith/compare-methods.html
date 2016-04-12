@@ -55,7 +55,7 @@ We need to prepare the data to run a differential expression tool on it.
 	cat fcounts/gene.txt | cut -f 1,7-12 > counts.txt
 
 We can now put these counts through `DE-seq` and produce a new file for
-differential expression. The file {% link 'de/deseq1.r' %}  will
+differential expression. The file {% link 'rnaseq/de/deseq1.r' %}  will
 need to be run through `R`. Save it as say `deseq1.r` and run it in the same directory that
 your data is in.
 

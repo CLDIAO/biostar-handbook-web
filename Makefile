@@ -5,12 +5,11 @@ REMOTE=www@biostarhandbook.com:/home/www/sites/handbook
 
 serve:
 	# Default action is to render the pages.
-	pyblue serve -r $(WEB)
+	pyblue -v -r $(WEB)
 
 html:
 	mkdir -p $(OUTPUT)
-	pyblue make --verbose --no-time -r $(WEB) -o $(OUTPUT)
-	echo $(OUTPUT)
+	pyblue -r $(WEB) -o $(OUTPUT)
 
 web: html
 	rsync --rsh=ssh -avz $(OUTPUT)/ $(REMOTE)

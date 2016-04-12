@@ -1,5 +1,7 @@
 {% extends "unitbase.html" %}
 {% load pytags %}
+{% load handbook %}
+
 {# title = Introduction to RNA-Seq #}
 {# subtitle = quantifying gene expression with DESeq 1 #}
 {# name = Introduction to RNA-Seq #}
@@ -7,8 +9,6 @@
 {% block body %}
 
 {% markdown %}
-
-{%  hidden_markdown "test.md" %}
 
 {%include_markdown "code/rnaseq1_data_install.md" %}
 
