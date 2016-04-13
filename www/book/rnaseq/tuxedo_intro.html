@@ -6,35 +6,27 @@
 
 {% block body %}
 
+{%  toggle "code/rnaseq1_data_install.md" id=1 title='Data Installation'  %}
+
+{%  toggle "code/rnaseq1_shortcuts.md"  id=2 title='Shortcuts' %}
+
 {% markdown %}
 
-{%include_markdown "code/rnaseq1_data_install.md" %}
 
-Set up your shortcuts:
+We first need to build a `bowtie2` index for the genome.
 
-    # Shortcut to various files.
-    # This is the reference genome.
-	REF=annot/22.fa
-
-	# This will be the name of the index
-	IDX=annot/22
-
-	# These are the coordinates of the genes.
-	GTF=annot/22.gtf
-
-    # The sequencing data that contain the first in pair
-	R1=data/HBR_1_R1.fq
-
-The results of the TopHat run placed
-
-    # Build a bowtie2 index
     bowtie2-build $REF $IDX
 
-    # Run TopHat and place results into the tophat_uhr1 directory
+Run TopHat and place results into the `tophat_uhr1` directory. We run `tophat2` in single end mode
+for now, look at the IGV visualization to see why.
+
     tophat2 -G $GTF -o tophat_hbr1 $IDX $R1
 
-    # Tophat generates file names automatically.
-    mkdir -p bam
+Tophat generates file names automatically, the file is called `accepted_hits.bam`.
+This is actually very confusing, you'll end up with many files all called `accepted_hits.bam`
+and the folder they reside is the differentiator. This can be very error prone. Best if we
+move the file to its own name.
+
     cp tophat_hbr1/accepted_hits.bam bam/HBR_1.bam
     samtools index bam/HBR_1.bam
 
@@ -61,40 +53,41 @@ right to left:
 
 When we align both files the internal organization of the reads is less obvious.
 
-Align all of our samples, this time in a paired end mode:
+Automate the execution with the  {% link "align-tophat2.sh" %} script that contains the following:
 
-    # Create output folder
-    mkdir -p bam
+{%  code "code/align-tophat2.sh" %}
 
-    set -eu
+Execute it with:
 
-    IDX=annot/22
-    GTF=annot/22.gtf
+    bash align-tophat2.sh
 
-    for SAMPLE in UHR HBR;
-    do
-        for REPLICATE in 1 2 3;
-        do
-            LABEL=${SAMPLE}_${REPLICATE}
-            tophat2 -G $GTF -o tophat_${LABEL} $IDX data/${LABEL}_R1.fq  data/${LABEL}_R2.fq
-            cp tophat_${LABEL}/accepted_hits.bam bam/${LABEL}.bam
-            samtools index bam/${LABEL}.bam
-        done
-    done
 
-This will produce all the files in the `bam` folder:
+### Differential expression with `cuffdiff`:
+
+Take a note of all the files in the `bam` folder:
 
     ls bam
 
-Differential expression with `cuffdiff`:
+Run `cuffdiff` by listing each all these files in two groups.
+The listing rule is simple but when the file names are longer they are hard to see.
+
+Within a group files are separated with commas whereas
+the groups are separated with a space: `A1,A2,A3   B1,B2,B3`
 
     cuffdiff -o cuffdiff_output $GTF bam/UHR_1.bam,bam/UHR_2.bam,bam/UHR_3.bam bam/HBR_1.bam,bam/HBR_2.bam,bam/HBR_3.bam
 
-This run will create files in the `cuffdiff_output` folder:
+The same could be done by using the builtin file pattern matching of bash which makes the line more readable:
+
+    cuffdiff -o cuffdiff_output $GTF bam/U*.bam /bam/H*.bam
+
+This run will create files in the `cuffdiff_output` folder that contains lots of files:
 
     ls cuffdiff_output/
 
-    # The Gene level differential expression can be seen in
+`Cuffdiff` will automatically generate counts at gene, transcript and coding sequence levels. This
+"convenience" is actually annoying in that just gives us too many things that we did not ask for.
+The gene level differential expression can be seen in
+
     head cuffdiff_output/gene_exp.diff
 
 will produce:
@@ -107,7 +100,7 @@ will produce:
     ENSG00000040608.13      ENSG00000040608.13      RTN4R      chr22:20241414-20283246 q1   q2   OK   124.515 1157.97  3.21721    2.85563     5e-05    0.00014     yes
     ENSG00000054611.13      ENSG00000054611.13      TBC1D22A   chr22:46762616-47175699 q1   q2   OK   500.343 415.63  -0.267616  -0.543656    0.24845  0.310157    no
 
-This step combines both abundance estimatation as well as differential expression into a single process.
+`cuffdiff` combines both abundance estimation as well as differential expression into a single process.
 The last column of this file indicates the differential expression of the gene (`YES`/`NO`).
 
 How many genes are differentially expressed:
@@ -135,7 +128,7 @@ Shows:
 
 Let's comparing these results with those obtained via {%  link 'rnaseq_intro.html' %}.
 
-    You can run the same tutorial in this folder as well. Just change the output `bam` directory
+You can run the same tutorial in this folder as well. Just change the output `bam` directory
 so that you don't overwrite the same bam files.
 In that case we had a file called ingeniously called `output.txt`
 

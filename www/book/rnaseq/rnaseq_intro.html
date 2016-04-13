@@ -8,42 +8,31 @@
 
 {% block body %}
 
-{%  toggle "code/rnaseq1_data_install.md" id=1 title='Installation'  %}
+{%  toggle "code/rnaseq1_data_install.md" id=1 title='Data Installation'  %}
 
 {%  toggle "code/rnaseq1_shortcuts.md"  id=2 title='Shortcuts' %}
 
 {% markdown %}
 
+We first need to build a `hisat2` index for the genome.
+
+	hisat2-build $REF $IDX
+
 Running the hisat2 aligner is then as simple as:
 
 	hisat2 $IDX -1 $R1 -2 $R2 | head
 
-By default it produces SAM files, to convert and sort as BAM format
+By default `histat2` produces SAM files, to convert and sort into BAM format
 
-	mkdir -p bam
 	hisat2 $IDX -1 $R1 -2 $R2 | sam2bam > bam/UHR_1.bam
 
-Automate the execution with a script. Place this into `run.sh`:
+Automate the execution with the  {% link "align-hisat2.sh" %} script that contains the following:
 
-    # Create output folder
-	mkdir -p bam
-
-	set -eu
-
-	for SAMPLE in UHR HBR;
-	do
-		for REPLICATE in 1 2 3;
-		do
-			LABEL=${SAMPLE}_${REPLICATE}
-			hisat2 annot/22 -1 data/${LABEL}_R1.fq -2 data/${LABEL}_R2.fq > bam/${LABEL}.sam
-			samtools view -b bam/${LABEL}.sam | samtools sort > bam/${LABEL}.bam
-			samtools index bam/${LABEL}.bam
-		done
-	done
+{%  code "code/align-hisat2.sh" %}
 
 Execute it all:
 
-    bash run.sh
+    bash align-hisat2.sh
 
 Visualize the results against the `hg38` human genome build for gene name `MAPK8IP2`:
 

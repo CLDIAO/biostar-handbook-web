@@ -3,7 +3,7 @@ Biostar Handbook specific template tags.
 """
 from __future__ import print_function, unicode_literals, absolute_import, division
 from django import template
-from pyblue.templatetags.pytags import markdown
+from pyblue.templatetags.pytags import markdown, match_file
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
@@ -30,11 +30,18 @@ def top_level_only(attrs, new=False):
 
 ANCHOR_PATTERN = '<a name="%s"></a>'
 TOP_LINK = '<a class="btn btn-default btn-xs btn-info" href="#top">&laquo; back to top</a>'
-BACK_LINK = '<a class="btn btn-default btn-xs btn-success" href="javascript: history.go(-1)">&laquo; Go Back</a>'
+BACK_LINK = '<a class="btn btn-default btn-xs btn-success" href="javascript: window.history.back()">&laquo; Go Back</a>'
 
 BOOK_COVER = '''
 <a href="https://leanpub.com/biostarhandbook"><img src="../img/cover.png" class="img-responsive {css} col-sm-{size}" alt="book cover"></a>
 '''
+
+@register.inclusion_tag('tada.html', takes_context=True)
+def tada(context, word, link, title="", size=4, clearfix=False):
+    obj, rellink, linkname = match_file(context=context, pattern=link)
+    title = title or linkname
+    params = dict(link=rellink, title=title, size=size, clearfix=clearfix, word=word)
+    return params
 
 @register.inclusion_tag('toggle.html', takes_context=True)
 def toggle(context, pattern, id=1, title='Show' ):
@@ -44,23 +51,26 @@ def toggle(context, pattern, id=1, title='Show' ):
 
 @register.simple_tag
 def top():
-    return TOP_LINK
+    return mark_safe(TOP_LINK)
 
-@register.simple_tag
-def back():
+@register.simple_tag(takes_context=True)
+def back(context):
     return mark_safe(BACK_LINK)
 
 @register.simple_tag
 def anchor(name):
-    return '<a name="%s">&nbsp;</a>' % name
+    link = '<a name="%s">&nbsp;</a>' % name
+    return mark_safe(link)
 
 @register.simple_tag
 def clearfix():
-    return '<div class="clearfix visible-xs-block"></div>'
+    fix = '<div class="clearfix visible-xs-block"></div>'
+    return mark_safe(fix)
 
 @register.simple_tag
 def cover(size=4, css="pull-right"):
-    return BOOK_COVER.format(size=size, css=css)
+    link = BOOK_COVER.format(size=size, css=css)
+    return mark_safe(link)
 
 @register.simple_tag(takes_context=True)
 def simplecode(context, pattern):
