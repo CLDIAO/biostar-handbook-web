@@ -30,6 +30,9 @@ body {
     transition: all .2s ease-in-out;
 }
 
+.tada:hover {
+    color: lightblue;
+}
 .tadalink {
     margin-bottom: 2rem;
 }
