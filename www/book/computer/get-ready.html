@@ -1,20 +1,18 @@
 {% extends "unitbase.html" %}
 {% load pytags %}
 {# title =  Get your computer ready #}
-{# subtitle =  do it once #}
+{# subtitle = first test of a bioinformatician #}
 {# name = Get your computer ready #}
 
 {% block body %}
 
 {% markdown %}
 
-### Basic concepts
-
 Bioinformatics requires the installation of software tools that usually are distributed in
 various formats:
 
 * "binary code" that can be run directly on the target computer.
-* programs that require the presence of another programming language: `java`, `python`, `ruby` or `perl`.
+* programs that require the presence of another programming language: `java`, `python`, or `perl`.
 * source code that needs to be "compiled" to create a "binary" program.
 * programs accessed via web interfaces that typically require the use of a web browser
 
@@ -22,70 +20,78 @@ In addition some software tools may require other additional software to be pres
 
 - - -
 
-### Steps that only need to be done once
+### Computer setup
 
 There are separate instructions for Max OSX, Linux and Windows computers.
 Follow only the instructions for your platform. There may be multiple steps required
 to get through.
 
-* {% link "computer-setup" %}
+* {% link "setup-osx" %}
+* {% link "setup-linux" %}
+* {% link "setup-windows" %}
 
 - - -
 
 ### Directory layout
 
 This section will make a lot more sense once you learn more about Unix.
+In the next commands `~` stands for the so called *home directory* that
+your Terminal will open into when started.
 
-We recommend that all tools be placed under the same directory. We recommend
-to use the `~/src` for all downloaded tools.
 
-Here `~` stands for the
-so called *home directory* that your Terminal will open into when started.
-We also recommend that you create a `~/bin` directory that is added to the execution path. This
-avoids having to extend the path for each tool. We will download
-and install reference genomes into the `~/refs` directory. You will
-need to do the following from a terminal:
+There are many ways to setup your computer. In our material we
+assume the following directory structure.
 
-    # This will store the downloaded program sources
+* We Use the `~/src` for all downloaded tools.
+* We create the `~/bin` directory that is added to the program search path. We will add
+links to our programs into this `~/bin` directory. This
+avoids having to extend the path for each tool.
+* Install reference genomes into the `~/refs` directory.
+
+Thus from a Terminal you will need to do the following:
+
+    # This will store the downloaded program sources.
     mkdir -p ~/src
 
-    # This folder will store shortcuts to all tools
+    # This folder will store shortcuts to all tools.
     mkdir -p ~/bin
 
-    # This folder will store the reference genomes and annotations
+    # This folder will store the reference genomes and annotations.
     mkdir -p ~/refs
 
 One of the early challenges here is that by default the Mac
 OSX Finder won't even show you the home directory that your Terminal
 opens into. You will need to make sure to enable it in the
-Finder as described in: {% link "computer-setup" %}.
+Finder as described in: {% link "setup-osx" %}.
+
 More information on how to create directories and what these commands mean
 is covered in the chapter discussing the Unix operating system.
 
-See also: {% link "how-to-set-the-path" %} and {% link "minimal-bash-profile" %}
+For troubleshooting see: {% link "troubleshoot" %}
 
 - - -
 
 ### Install a TEXT editor
 
-Microsoft Word is **NOT** a text editor. Sooner or later it will  cause (devious) problems.
+Microsoft Word is **NOT** a text editor. using Word to edit test will will eventucally cause (devious) errors.
 Best if you start using a proper text editor. Essential features:
 
-* Ability to show **TAB** characters versus multiple **SPACE** characters.
-  Mixing up TABS and SPACES is a very common error. Copy-pasting from a web
-  page often turns a TAB into SPACE characters (yes very annoying). We need the ability
-  to see the difference if necessary.
+* Ability to show `TAB` characters versus multiple `SPACE` characters.
+  Mixing up `TABS` and `SPACES` is a very common error. Copy-pasting from a web
+  page often turns a `TAB` into `SPACE` characters (yes, it very annoying! look out for this).
+  We need the ability to see the difference if necessary.
 * Show line numbering. Lets us to identify the line where an error is reported.
 * Switch line endings. Line endings have variants: Unix, Windows or Mac OS 9 endings.
   (Mac OSX uses Unix line endings). All files should have a  Unix line ending mode.
   Your editor needs to have the ability to convert line endings to Unix format.
 
-Recommendation: [Sublime Text 2](http://www.sublimetext.com/2) that is
-available for all platforms but there
-are many other options with different tradeoffs. Please download and install this editor.
+Recommendations:
 
-**Note:** We use [PyCharm](https://www.jetbrains.com/pycharm/) and we use it for both text editing and programming
-but this may be an overkill for just doing bioinformatics.
+* [Sublime Text 2](http://www.sublimetext.com/2) is a simple and small text editor
+that is available for all platforms
+* We use [PyCharm](https://www.jetbrains.com/pycharm/) and we use it for both text editing
+and programming.
+
 
 {% endmarkdown %}
 

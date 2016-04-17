@@ -1,17 +1,13 @@
 {% extends "unitbase.html" %}
 {% load pytags %}
-{# title =  Hardware Setup #}
+{# title =  Set up Mac OSX #}
 {# subtitle = this only needs to be done once #}
-{# name = How do I set up my computer? #}
+{# name = How to set up a Mac OSX computer #}
 
 {% block body %}
 {% markdown %}
 
-These tasks only need to be done once.The recommended platforms are Ubuntu Linux and Mac OS X.
-
-- - -
-
-## Setting up a Mac OS X based computer
+Update your OS to the latest version.
 
 ### Install XCode Command Line Tools
 
@@ -39,7 +35,7 @@ regularly update the formulas, especially after an XCode update.
     brew tap homebrew/science
     brew update
 
-Ocassionally when using `brew` the version of the software
+Occasionally when using `brew` the version of the software
 that `brew` installs may be older
 than the newest release.
 In that case users can often install from source the same tool.
@@ -54,13 +50,13 @@ if these are installed right away:
     brew install Caskroom/cask/xquartz
 
     # Install required libraries. These will finish much faster.
-    brew install gd libharu git imagemagick lzo hdf5 bison
+    brew install gd libharu git imagemagick lzo hdf5 bison wget
 
 A library may become outdated in which case it needs to be upgraded.
 For example:
 
     brew update
-    brew upgrade gd libharu git imagemagick lzo hdf5
+    brew upgrade gd libharu git imagemagick lzo hdf5 bison wget
 
 Occasionally the `brew` command may fail to install a tool when some parts of the system do not have write access.
 You will receive "permission errors" for example `/usr/local/man/ is not writable`.
@@ -73,7 +69,7 @@ In those cases you need to set write permissions to those directories with:
     sudo chown -R $(whoami):admin /usr/local
 
 **Note:** even when regularly updated the brewed formulas may install
-older versions of the software.
+older versions of the software. In that case follow the **Unix** installation instructions.
 
 - - -
 
@@ -81,8 +77,8 @@ older versions of the software.
 
 Install [Java JDK for Mac OS X](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
-Make sure that you install the JDK (Java Development Kit) and not the JRE (Java Runtime Environment)
-
+Make sure that you install the **JDK** (Java Development Kit) and not the **JRE** (Java Runtime Environment)
+version of Java.
 - - -
 
 ### Set the Finder Preferences
@@ -95,56 +91,6 @@ My username is `ialbert`, yours will be different. See below:
 ![Finder Preferences](/img/finder-preferences.png)
 
 **DONE**: Your Mac is now ready for bioinformatics.
-
-- - -
-
-# Setting up Linux based computer
-
-Select a well established Linux distribution: Ubuntu
-
-There are numerous Linux distributions with various naming schemes. To set up a system users
-need to install packages via a so called package managers: `apt-get`, `yum` and others.
-Depending on the Linux distribution's intial configuration one may install some, all or none of the
-package shown below. Moreover the naming of these libraries occasionally changes. Please report
-errors via the ticketing system. For Ubuntu Linux the following instructions were required.
-
-    # Update your linux package. You may need to run this periodically.
-    sudo apt-get update && sudo apt-get upgrade
-
-    # Install a number of required libraries.
-    sudo apt-get install -y curl build-essential ncurses-dev byacc zlib1g-dev python-dev git cmake
-
-    # Install java and python libraries.
-    sudo apt-get install -y unzip default-jre python-pip
-
-Depending on your linux distribution software may be prepackaged. Typically
-however these prepackaged versions lag the current versions.  For example
-you may be able to install the EMBOSS tools with:
-
-    sudo apt-get -y install emboss
-
-You may also need to install common perl modules that sometimes are not included.
-During the first run it will ask for a lot of parameters. Selecting the defaults should be fine.
-
-    sudo perl -MCPAN -e 'install "LWP::Simple"'
-    sudo perl -MCPAN -e 'install "HTML::Entities"'
-
-**DONE**: Your Linux system is now ready for bioinformatics.
-
-- - -
-
-## Setting up a Windows based computer
-
-### Install Cygwin
-
-Ensure that you have selected all packages during installation. This is a bit counterintuitive
-in the setup interface. You need to click the "plus" icon twice until all packages are selected.
-
-(todo)
-
-### Install Java
-
-(todo)
 
 {% endmarkdown %}
 

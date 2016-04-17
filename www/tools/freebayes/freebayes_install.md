@@ -1,6 +1,6 @@
 ## FreeBayes
 
-Bayesian haplotype-based polymorphism discovery and genotyping. 
+Bayesian haplotype-based polymorphism discovery and genotyping.
 
 Publication: [Haplotype-based variant detection from short-read sequencing][freebayes-pub]
 
@@ -9,12 +9,13 @@ Website: [https://github.com/ekg/freebayes][freebayes-web]
 [freebayes-pub]: http://arxiv.org/abs/1207.3907
 [freebayes-web]: https://github.com/ekg/freebayes
 
-Prerequisites install `cmake`:
+Prerequisites install `cmake` and `wget`:
 
 **MacOSX**:
 
 	brew install cmake
-	
+	brew install wget
+
 **Linux**
 
 	apt-get install cmake
@@ -35,4 +36,3 @@ Main installation instructions
 Test installation by running:
 
     freebayes
-    

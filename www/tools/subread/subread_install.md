@@ -1,25 +1,32 @@
-## subread and featurecounts
+## Subread and featureCounts
 
-Alinger and feature counter
+Aligner and feature counter
 
 Website: http://bioinf.wehi.edu.au/subread-package/
 
+Obtain the source code:
+
+	cd ~/src
+	curl -OL http://sourceforge.net/projects/subread/files/subread-1.5.0/subread-1.5.0-source.tar.gz
+	tar zxv subread-1.5.0-source.tar.gz
+	cd subread-1.5.0-source/src
 
 **Mac OSX**:
 
-	cd ~/src
-	curl -L http://sourceforge.net/projects/subread/files/subread-1.5.0/subread-1.5.0-source.tar.gz | tar xzv
-	cd subread-1.5.0-source/src
 	make -f Makefile.MacOS
+
+**Linux** :
+
+    make -f Makefile.Linux
+
+Link the executables into the `~bin` folder:
+
 	ln -fs ~/src/subread-1.5.0-source/bin/featureCounts ~/bin
 	ln -fs ~/src/subread-1.5.0-source/bin/subread-align ~/bin
 	ln -fs ~/src/subread-1.5.0-source/bin/subread-buildindex ~/bin
 
-#
-# On Linux
-#
-# make -f Makefile.Linux
+Check that the programs work
 
-# Check that the featureCounts program works
-featureCounts
-subread-align
+    featureCounts
+    subread-align
+

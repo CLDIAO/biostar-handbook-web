@@ -1,0 +1,44 @@
+{% extends "unitbase.html" %}
+{% load pytags %}
+{# title =  Set up Windows  #}
+{# subtitle = this only needs to be done once #}
+{# name = How to set up a Windows computer #}
+
+{% block body %}
+{% markdown %}
+
+There is a ray of hope on the horizon.
+
+Apparently Windows 10 will soon support running Linux based software.
+At that point Windows will be fully functional in bioinformatics.
+
+Until then various workarounds are required.
+Typically these involve either running [Cygwin][cygwin], Linux-like environment for Windows or a full Linux
+emulator like [VirtualBox][virtualbox].
+
+[virtualbox]: https://www.virtualbox.org/wiki/Downloads
+[cygwin]: https://www.cygwin.com/
+
+### Install Cygwin
+
+When installing cygwin ensure that you have the following packages selected:
+
+* git
+* make
+* gcc-g++
+* openssh
+* zlib
+
+(todo)
+
+### Install Java
+
+Install [Java JDK for Mac OS X](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+
+Make sure that you install the **JDK** (Java Development Kit) and not the **JRE** (Java Runtime Environment)
+version of Java.
+
+
+{% endmarkdown %}
+
+{% endblock %}
