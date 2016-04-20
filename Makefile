@@ -9,7 +9,7 @@ serve:
 
 html:
 	mkdir -p $(OUTPUT)
-	pyblue -r $(WEB) -o $(OUTPUT)
+	pyblue -r $(WEB) -o $(OUTPUT) 
 
 web: html
 	rsync --rsh=ssh -avz $(OUTPUT)/ $(REMOTE)

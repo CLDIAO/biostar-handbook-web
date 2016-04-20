@@ -30,7 +30,7 @@ def top_level_only(attrs, new=False):
 
 ANCHOR_PATTERN = '<a name="%s"></a>'
 TOP_LINK = '<a class="btn btn-default btn-xs btn-info" href="#top">&laquo; back to top</a>'
-BACK_LINK = '<a class="btn btn-default btn-xs btn-success" href="javascript: window.history.back()">&laquo; Go Back</a>'
+BACK_LINK = '<a class="btn btn-default btn-xs btn-success" href="{link}">&laquo; Go Back</a>'
 
 BOOK_COVER = '''
 <a href="https://leanpub.com/biostarhandbook"><img src="../img/cover.png" class="img-responsive {css} col-sm-{size}" alt="book cover"></a>
@@ -54,8 +54,11 @@ def top():
     return mark_safe(TOP_LINK)
 
 @register.simple_tag(takes_context=True)
-def back(context):
-    return mark_safe(BACK_LINK)
+def back(context, link=''):
+    link = link or 'book/index.html'
+    obj, rellink, linkname = match_file(context=context, pattern=link)
+    button = BACK_LINK.format(link=rellink)
+    return mark_safe(button)
 
 @register.simple_tag
 def anchor(name):

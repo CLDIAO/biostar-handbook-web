@@ -1,16 +1,12 @@
 {% extends "base.html" %}
 {# subtitle = unitbase #}
-{% block bodyhead %}
-<div class="chapter title">
-    {%  back %} &bull;
 
-    This is <b>{{page.title}}</b> section for
-    the <a href="/">
-        <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Biostar Handbook</a>.
-</div>
+{% block navbar %}
+    <div>
+        <ul class="nav nav-tabs" role="tablist">
+            <li><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home </a> </li>
+            <li><a href="{%  path "book/index.html" %}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Book </a> </li>
+            <li class="active"><a href="#"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> {{ page.title }}</a> </li>
+        </ul>
+    </div>
 {% endblock %}
-{% block navbar %}<hr> {% endblock %}
-{%  block bodyend %}
-<hr>
-{%  back %}
-{%  endblock %}
