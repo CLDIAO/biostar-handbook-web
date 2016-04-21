@@ -2,11 +2,24 @@
 {% load pytags %}
 {# title =  Troubles in your PATH  #}
 {# subtitle = when good PATHs go bad #}
-{# name = What to do when nothing seems to work #}
+{# name = What to do when you broke everything #}
 
 {% block body %}
 
 {% markdown %}
+
+### Symptom
+
+Yes, it is possible to break everything so that not even simple command works anymore.
+
+    $ ls
+    -bash: ls: command not found
+
+Sooner or later we all do this.
+
+- - -
+
+### How can this happen
 
 If you mistype the `PATH` variable while
 adding it into the `.bash_profile` you may end up
@@ -37,12 +50,12 @@ this at one point in their career. Hence you are well on your way to guru-ness. 
 
 - - -
 
-### Explanation
+### A shorter explanation
 
-Jules in Pulp Fiction explains it best:
+Jules in [Pulp Fiction](https://en.wikipedia.org/wiki/Pulp_Fiction) explains it best:
 
 > The `PATH` to any righteous tool is beset on all sides by the
-> inequities of Unix and the Tyranny of Environment Variables.
+> inequities of `Unix` and the Tyranny of `Environment Variables`.
 >
 > Blessed is he who, in the name of charity and good will, shepherds the weak
 > through the valley of darkness, for he is truly his brother's keeper
@@ -52,13 +65,15 @@ Jules in Pulp Fiction explains it best:
 
 ### How to fix it
 
-Open a terminal. Oh yes, it is still broken. Fix the `PATH` within the terminal.
+Open a terminal. Oh yes, it is still broken.
 
-    export PATH=/bin:/usr/bin
+1. Fix the `PATH` within the terminal.
 
-Edit your `.bash_profile` with `nano` and remove the lines that cause the trouble:
+        export PATH=/bin:/usr/bin
 
-    nano ~/.bash_profile
+2. Edit your `.bash_profile` with `nano` and remove the lines that cause the trouble:
+
+        nano ~/.bash_profile
 
 `nano` is a bit of a quirky editor. Take it as punishment meted out for clobbering your path.
 It could be worse. At least your don't have to use `vi`.

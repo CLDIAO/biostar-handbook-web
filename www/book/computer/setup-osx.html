@@ -7,7 +7,14 @@
 {% block body %}
 {% markdown %}
 
-Update your OS to the latest version.
+### Introduction
+
+Update your OSX to the latest version.
+
+Most installation instructions will be executed in a Terminal.
+Open a Terminal and type in the commands.
+
+- - -
 
 ### Install XCode Command Line Tools
 
@@ -15,13 +22,13 @@ Mac OSX users need to install XCode command line tools with the following comman
 
     xcode-select --install
 
+This will trigger an installation procedure that the user needs to accept.
+
 In addition users may need also need to occasionally launch
 the same command again after certain updates to agree to
 changes in the license. Users can accept the new license by typing:
 
     sudo xcodebuild -license
-
-or by starting XCode itself.
 
 - - -
 
@@ -29,44 +36,37 @@ or by starting XCode itself.
 
 The Mac OSX instructions will use [HomeBrew](http://brew.sh/) whenever the tool has a corresponding
 formula.
-When using homebrew users need to tap the science formulas then
+
+Visit the [HomeBrew](http://brew.sh/) page for the installation script. Currently this is:
+
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+The installation above will have to be run by a user with local administrator rights and the password
+for will need to be provided during installation.
+
+To use `brew` users will need to "tap" the ["science formulas"](https://github.com/Homebrew/homebrew-science)  then
 regularly update the formulas, especially after an XCode update.
 
     brew tap homebrew/science
     brew update
 
-Occasionally when using `brew` the version of the software
-that `brew` installs may be older
-than the newest release.
-In that case users can often install from source the same tool.
-Here is a list of all [science formulas](https://github.com/Homebrew/homebrew-science)
-
 There are a number of important libraries that tools may require, it is best
-if these are installed right away:
+if these are installed right away.
 
-    # Install the X11 libraries.
-    # Unlike most other installation commands this may take a long time
-    # to finish (30 minutes or more) and it will ask for a root password.
-    brew install Caskroom/cask/xquartz
+1. Install the X11 libraries. Unlike most other installation commands this may take a long time
+to finish (30 minutes or more) and it will ask for a root password.
 
-    # Install required libraries. These will finish much faster.
-    brew install gd libharu git imagemagick lzo hdf5 bison wget
+        brew install Caskroom/cask/xquartz
 
-A library may become outdated in which case it needs to be upgraded.
-For example:
+2. Install other required libraries. These will finish much faster.
 
-    brew update
-    brew upgrade gd libharu git imagemagick lzo hdf5 bison wget
+        brew install gd libharu git imagemagick lzo hdf5 bison wget
 
-Occasionally the `brew` command may fail to install a tool when some parts of the system do not have write access.
-You will receive "permission errors" for example `/usr/local/man/ is not writable`.
-In those cases you need to set write permissions to those directories with:
+3. Libraries may become outdated in time in which case it need to be upgraded.
+Periodically you many need to update these:
 
-    sudo chmod 777 /usr/local/man/
-
-**Note**: Mac OSX, El Capitan update, the following command may need to be run:
-
-    sudo chown -R $(whoami):admin /usr/local
+        brew update
+        brew upgrade gd libharu git imagemagick lzo hdf5 bison wget
 
 **Note:** even when regularly updated the brewed formulas may install
 older versions of the software. In that case follow the **Unix** installation instructions.
@@ -75,10 +75,15 @@ older versions of the software. In that case follow the **Unix** installation in
 
 ### Install Java JDK
 
+Make sure to install the **JDK** (Java Development Kit) and not the **JRE** (Java Runtime Environment)
+version of Java.
+
 Install [Java JDK for Mac OS X](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
-Make sure that you install the **JDK** (Java Development Kit) and not the **JRE** (Java Runtime Environment)
-version of Java.
+Test your installation by typing:
+
+    java -version
+
 - - -
 
 ### Set the Finder Preferences
@@ -90,8 +95,15 @@ My username is `ialbert`, yours will be different. See below:
 
 ![Finder Preferences](/img/finder-preferences.png)
 
-**DONE**: Your Mac is now ready for bioinformatics.
+### Some files won't be shown
 
+Note that the Finder will not show so called "hidden" files, these are files
+whose name starts with a period: `.`
+
+There is nothing really hidden about these files, it is just a convention that Unix
+adopted that, by default avoids showing file names that were typically used
+for configuration.
+    
 {% endmarkdown %}
 
 {% endblock %}
