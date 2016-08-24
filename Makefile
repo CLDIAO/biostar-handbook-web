@@ -1,16 +1,16 @@
 
 OUTPUT=~/tmp/pyblue/biostar-handbook
 WEB=www
-REMOTE=www@biostarhandbook.com:/home/www/sites/handbook
+REMOTE=www@biostarhandbook.com:/home/www/sites/www
 
 serve:
 	# Default action is to render the pages.
-	pyblue -r $(WEB) -p 4000 -v
+	pyblue -r $(WEB) -p 4000
 
 push:
 	git commit -am 'book update'
 	git push
-	
+
 html:
 	mkdir -p $(OUTPUT)
 	pyblue -r $(WEB) -o $(OUTPUT) 
