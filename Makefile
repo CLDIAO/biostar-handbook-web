@@ -1,7 +1,7 @@
 
 OUTPUT=~/tmp/pyblue/biostar-handbook
 WEB=www
-REMOTE=www@biostarhandbook.com:/home/www/sites/www
+REMOTE=www@biostarhandbook.com:/home/www/sites/handbook/www
 
 serve:
 	# Default action is to render the pages.
