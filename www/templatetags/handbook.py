@@ -12,7 +12,7 @@ import sys, re, logging, textwrap
 logger = logging.getLogger('pyblue')
 
 import bleach
-from pyblue.templatetags.pytags import find
+from pyblue.templatetags.pytags import *
 register = template.Library()
 
 logger.debug("loading template library: {}".format(__file__))
@@ -45,7 +45,7 @@ def tada(context, word, link, title="", size=4, clearfix=False):
 
 @register.inclusion_tag('toggle.html', takes_context=True)
 def toggle(context, pattern, id=1, title='Show' ):
-    text = find(context=context, pattern=pattern)
+    text = read_file(context=context, pattern=pattern)
     html = markdown(text)
     return dict(html=html, id=id, title=title)
 
@@ -77,7 +77,7 @@ def cover(size=4, css="pull-right"):
 
 @register.simple_tag(takes_context=True)
 def simplecode(context, pattern):
-    text = find(context=context, pattern=pattern)
+    text = read_file(context=context, pattern=pattern)
     html = markdown("```\n{}\n```").format(text)
     return html
 

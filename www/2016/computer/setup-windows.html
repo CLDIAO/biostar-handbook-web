@@ -7,12 +7,22 @@
 {% block body %}
 {% markdown %}
 
-There is a ray of hope on the horizon.
+## Linux on Windows
 
-Apparently Windows 10 will soon support running Linux based software.
-At that point Windows will be fully functional in bioinformatics.
+Starting Aug 5, 2016 Windows 10 supports running Linux subsystem directly inside windows.
+We believe that this will make Windows fully functional for bioinformatics.
 
-Until then various workarounds are required.
+### Installation
+
+There are a few hoops to jump through. Follow the instructions as
+described in [Bash on Ubuntu on Windows][windowsbash]
+
+[windowsbash]: https://msdn.microsoft.com/en-us/commandline/wsl/about
+
+## Other alternatives
+
+Various workarounds are required. None of which will fully work though.
+
 Typically these involve either running [Cygwin][cygwin], Linux-like environment for Windows or a full Linux
 emulator like [VirtualBox][virtualbox].
 
@@ -29,7 +39,7 @@ When installing cygwin ensure that you have the following packages selected:
 * openssh
 * zlib
 
-(todo)
+and many others.
 
 ### Install Java
 
@@ -37,7 +47,6 @@ Install [Java JDK for Mac OS X](http://www.oracle.com/technetwork/java/javase/do
 
 Make sure that you install the **JDK** (Java Development Kit) and not the **JRE** (Java Runtime Environment)
 version of Java.
-
 
 {% endmarkdown %}
 

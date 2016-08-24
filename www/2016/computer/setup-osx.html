@@ -47,7 +47,14 @@ for will need to be provided during installation.
 To use `brew` users will need to "tap" the ["science formulas"](https://github.com/Homebrew/homebrew-science)  then
 regularly update the formulas, especially after an XCode update.
 
+    # This is used to tap formulas used in science
     brew tap homebrew/science
+
+    # This is used to tap formulas that requires software
+    # with difference versions
+    brew tap homebrew/versions
+
+    # Run this command regularly
     brew update
 
 There are a number of important libraries that tools may require, it is best
