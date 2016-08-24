@@ -15,31 +15,39 @@ refer to Ubuntu/Debian based systems.
 To set up a system users
 need to install packages via a so called package managers: `apt-get`, `yum` and others.
 Depending on the Linux distribution's initial configuration one may install some, all or none of the
-package shown below. Moreover the naming of these libraries occasionally changes. Please report
-errors via the ticketing system. For Ubuntu Linux the following instructions were required.
+package shown below. Moreover the naming of these libraries occasionally changes.
 
-    # Update your linux package. You may need to run this periodically.
-    sudo apt-get update && sudo apt-get upgrade
+For Ubuntu Linux the following instructions were required to set up our system:
 
-    # Install a number of required libraries.
-    sudo apt-get install -y curl build-essential ncurses-dev byacc zlib1g-dev python-dev git cmake
+{%  code 'ubuntu-install.sh' %}
 
-    # Install java and python libraries.
-    sudo apt-get install -y unzip default-jre python-pip
+Install the Java programming environment.
 
-Depending on your linux distribution software may be prepackaged. Typically
-however these prepackaged versions lag the current versions.  For example
-you may be able to install the EMBOSS tools with:
+{%  code 'ubuntu-install-java.sh' %}
+
+Depending on the Linux distribution some software may be prepackaged and ready to install.
+Note that these prepackaged versions may be older than the most up to date
+versions.
+
+For example you may be able to install the EMBOSS tools with:
 
     sudo apt-get -y install emboss
 
-You may also need to install common perl modules that sometimes are not included.
-During the first run it will ask for a lot of parameters. Selecting the defaults should be fine.
+Or NCBI blast can be installed via:
 
-    sudo perl -MCPAN -e 'install "LWP::Simple"'
-    sudo perl -MCPAN -e 'install "HTML::Entities"'
+    sudo apt-get -y install ncbi-blast+
 
-**DONE**: Your Linux system is now ready for bioinformatics.
+Then if you run `blastn`:
+
+    blastn -version
+
+It will print:
+
+    blastn: 2.2.28+
+    Package: blast 2.2.28, build Jun  3 2013 11:17:14
+
+Following he installation instructions from the {% link "how-to-install-everything" %} page we would
+get a different, newer version of `blastn`.
 
 {% endmarkdown %}
 
